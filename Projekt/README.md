@@ -13,4 +13,4 @@ Durch verschiedene Lernmodi können Vokabeln auf unterschiedliche Weisen gelernt
 Wurden Vokabeln falsch bewantwortet, werden diese am Ende eines Lerndurchlaufs erneut abgefragt. 
 ## Welche Informationen/Daten werden  gespeichert? 
 Es werden die Vokabeln, so wie die dazugehörige Übersetzung, gespeichert und je Lerndurchlauf die Vokabeln, die falsch beantwortet wurden. 
-Ebenso werden Listennamen und Zuordnung von Vokabeln gespeichert. 
+Ebenso werden Listennamen und Zuordnungen von Vokabeln gespeichert. 
