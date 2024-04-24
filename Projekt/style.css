@@ -108,16 +108,17 @@ a{
     margin-top: 20px;
     cursor: pointer;
 }
-.flashcard_questionare{
+.learning_questionare{
     float: inline-start;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
     width:90%;
     padding: 30px 2%;
     border: rgb(121, 91, 13) 2px solid;
     margin: 30px 3%;
 }
-.flashcard_buttons{
+
+.learning_buttons{
     background-color: rgba(71, 41, 13, 0.235);
     border: rgb(121, 91, 13) 1px solid;
     color: rgb(205, 162, 182);
