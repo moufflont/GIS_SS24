@@ -7,44 +7,34 @@
     </head>
     <body>
         <header>
-            <nav>
-                <p>Vokabeln bearbeiten</p>
-                <div>
-                    <a href="index.html">Startseite</p>
-                    <a href="vokabeln.html">Vokabeln</a>
-                </div>
-            </nav>
-        </header>
+            <div><a class="headding">Vokabeln</a></div>
+            <div><a class="index" href="index.html">Startseite</a></div> 
+            <div><a class="vocabulary" href="vokabeln.html">Vokabeln</a></div> 
+         </header>
         <main>
-            <p>hinzufügen</p>
+            <button id="add">Neue Vokabel hinzufügen</button>
+            <div class="vocab">
+                <!--vocabulary and translation-->
+                <button class="vocab_edit">Löschen</button>
+                <button class="vocab_edit">Bearbeiten</button>
+                <br>
+                <input class="vocab_input" type="text" value="Vokabel"> 
+                <br>
+                <input class="vocab_input" type="text" value="Übersetzung">
+            </div>
 
-            <div>
-                <p><!--vocabulary and translation--></p>
-                <p>löschen</p>
-                <p>bearbeiten</p>
-            </div>
-            <div>
-                <p><!--vocabulary and translation--></p>
-                <p>löschen</p>
-                <p>bearbeiten</p>
-            </div>
-            <div>
-                <p><!--vocabulary and translation--></p>
-                <p>löschen</p>
-                <p>bearbeiten</p>
-            </div>
-            <div>
-                <p><!--vocabulary and translation--></p>
-                <p>löschen</p>
-                <p>bearbeiten</p>
-            </div>
-            <div>
-                <p><!--vocabulary and translation--></p>
-                <p>löschen</p>
-                <p>bearbeiten</p>
-            </div>
+            <div class="vocab">
+                <!--vocabulary and translation-->
+                <button class="vocab_edit">Löschen</button>
+                <button class="vocab_edit">Bearbeiten</button>
+                <br>
+                <input class="vocab_input" type="text" value="Vokabel"> 
+                <br>
+                <input class="vocab_input" type="text" value="Übersetzung">
+            </div>            
+            
             <!--if discard, later vocabulary should move to fill position-->
-            <!--if edit, klick and edit für vocabulary and translation is possible-->
+            <!--if edit, klick and edit for vocabulary and translation is possible-->
         </main>
     </body>
 </html>

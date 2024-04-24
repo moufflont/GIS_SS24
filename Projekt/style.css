@@ -1,29 +1,131 @@
 body{
     background-color: rgb(11, 63, 84);
-    color:rgb(154, 134, 143);
     font-family: 'Courier New', Courier, monospace;
-}
-a{
-    color: rgb(154, 134, 143);
-    text-decoration: none;
 }
 header{
     background-color: rgb(121, 91, 13);
-    color: rgb(11,63,84);
+    min-height: 90px;
+    text-align: center;
+    padding-top:15px;
 }
 footer{
     background-color: rgb(121, 91, 13);
     color: rgb(11,63,84); 
 }
-header p{
-    font-size: 35px;
-    text-align: center;
+.headding{
+    font-size: 30px;
+    color: rgb(11,63,84);
 }
-.lernmodus{
+.index{
+    float:left;
+    font-size: 17px;
+    color: rgb(11, 63, 84);
+    padding:3px;
+    background-color: rgba(1, 53, 84,0.150);
+    margin:15px;
+}
+.vocabulary{
+    float:right;
+    font-size: 17px;
+    color: rgb(11, 63, 84);
+    padding:3px;
+    background-color: rgba(1, 53, 84,0.150);
+    margin:15px;
+}
+.learningmethod_left{
     float: left;
-    font-size: 25px;
-    padding: 10px;
+    text-align: center;
+    font-size: 23px;
+    background-color: rgba(71, 41, 13, 0.235);
+    width: 40%;
+    height:120px;
+    padding: 10px 5px 3px 3px;
     border-color: rgb(121, 91, 13);
-    border-width: 5px;
+    border-width: 2px;
     border-style: solid;
+    margin-left:5%;
+    margin-top:2%;
+}
+.learningmethod_right{
+    float: right;
+    text-align: center;
+    font-size: 23px;
+    background-color: rgba(71, 41, 13, 0.235);
+    width: 40%;
+    height:120px;
+    padding: 10px 5px 3px 3px;
+    border-color: rgb(121, 91, 13);
+    border-width: 2px;
+    border-style: solid;
+    margin-right:5%;
+    margin-top:2%;
+}
+a{
+    color: rgb(205, 162, 182);
+    text-decoration: none;
+}
+#flashcards_img{
+    height:70%;
+}
+#translate_img{
+    height: 90%;
+    rotate: 45;
+}
+#add{
+    background-color: rgba(71, 41, 13, 0.235);
+    border: rgb(121, 91, 13) 2px solid;
+    color: rgb(205, 162, 182);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 17px;
+    text-decoration: none;
+    width:94%;
+    padding: 20px;
+    margin: 20px 4% 5px 4%;
+    cursor: pointer;
+}
+.vocab_input{
+    float: inline-start;
+    background-color: rgb(11, 63, 84);
+    border: rgb(121, 91, 13) 1px solid;
+    color: rgb(205, 162, 182);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    width:98%;
+    padding: 4px;
+    margin: 3px;
+}
+.vocab_edit{
+    float: inline-start;
+    background-color: rgba(71, 41, 13, 0.235);
+    border: rgb(121, 91, 13) 1.5px dotted;
+    color: rgb(205, 162, 182);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: center;
+    padding: 5px;
+    margin: 3px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.flashcard_questionare{
+    float: inline-start;
+    text-align: center;
+    font-size: 20px;
+    width:90%;
+    padding: 30px 2%;
+    border: rgb(121, 91, 13) 2px solid;
+    margin: 30px 3%;
+}
+.flashcard_buttons{
+    background-color: rgba(71, 41, 13, 0.235);
+    border: rgb(121, 91, 13) 1px solid;
+    color: rgb(205, 162, 182);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: center;
+    padding: 5px;
+    margin: 3px;
+    cursor: pointer;
 }
