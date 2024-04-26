@@ -61,7 +61,7 @@ footer{
     margin-top:2%;
 }
 a{
-    color: rgb(205, 162, 182);
+    color: white;
     text-decoration: none;
 }
 #flashcards_img{
@@ -69,12 +69,12 @@ a{
 }
 #translate_img{
     height: 90%;
-    rotate: 45;
+
 }
 #add{
     background-color: rgba(71, 41, 13, 0.235);
     border: rgb(121, 91, 13) 2px solid;
-    color: rgb(205, 162, 182);
+    color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 17px;
     text-decoration: none;
@@ -87,7 +87,7 @@ a{
     float: inline-start;
     background-color: rgb(11, 63, 84);
     border: rgb(121, 91, 13) 1px solid;
-    color: rgb(205, 162, 182);
+    color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 15px;
     width:98%;
@@ -98,7 +98,7 @@ a{
     float: inline-start;
     background-color: rgba(71, 41, 13, 0.235);
     border: rgb(121, 91, 13) 1.5px dotted;
-    color: rgb(205, 162, 182);
+    color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 13px;
     text-decoration: none;
@@ -121,7 +121,7 @@ a{
 .learning_buttons{
     background-color: rgba(71, 41, 13, 0.235);
     border: rgb(121, 91, 13) 1px solid;
-    color: rgb(205, 162, 182);
+    color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 13px;
     text-decoration: none;
