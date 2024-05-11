@@ -4,12 +4,13 @@
         <meta charset="utf-8"/>
         <title>Lernmodus: Übersetzen</title>
         <link rel="stylesheet" href="style.css" />
+        <script src="script.js" defer></script>
     </head>
     <body>
         <header>
             <a class="headding">Übersetzen</a>
-            <div><a class="index" href="index.html">Startseite</a></div> 
-            <div><a class="vocabulary" href="vokabeln.html">Vokabeln</a></div> 
+            <div><a class="float_left nav_buttons" href="index.html">Startseite</a></div> 
+           <div><a class="float_right nav_buttons" href="vokabeln.html">Vokabeln</a></div> 
          </header>
         <main>
             <div class="learning_questionare">
@@ -17,9 +18,9 @@
                 <br>
                 <input class="vocab_input" type="text" placeholder="Hier Übersetzung eingeben..." autofocus>
                 <br>
-                <button class="learning_buttons">Antwort überprüfen</button> 
+                <button class="learning_buttons" class="check">Antwort überprüfen</button> 
                 <!--if checked: right or wrong, the right answer is:xX-->
-                <button class="learning_buttons">Nächste</button>
+                <button class="learning_buttons" class="next">Nächste</button>
             </div>
         </main>
         <footer>

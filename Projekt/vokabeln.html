@@ -4,12 +4,13 @@
         <meta charset="utf-8"/>
         <title>Vokabeln</title>
         <link rel="stylesheet" href="style.css" />
+        <script src="script.js" defer></script>
     </head>
     <body>
         <header>
             <a class="headding">Vokabeln</a>
-            <div><a class="index" href="index.html">Startseite</a></div> 
-            <div><a class="vocabulary" href="vokabeln.html">Vokabeln</a></div> 
+            <div><a class="float_left nav_buttons" href="index.html">Startseite</a></div> 
+           <div><a class="float_right nav_buttons" href="vokabeln.html">Vokabeln</a></div>  
          </header>
         <main>
             <button id="add">Neue Vokabel hinzufügen</button>
@@ -23,8 +24,8 @@
             </div>
 
             <div class="vocab">
-                <button class="vocab_edit">Löschen</button>
-                <button class="vocab_edit">Bearbeiten</button>
+                <button class="vocab_edit" class="delete">Löschen</button>
+                <button class="vocab_edit" class="edit">Bearbeiten</button>
                 <br>
                 <input class="vocab_input" type="text" value="apple" disabled> 
                 <br>
