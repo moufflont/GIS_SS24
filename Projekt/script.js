@@ -2,6 +2,7 @@
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click',addElement);
 function addElement(event){
+    //if id>0, also wenn vokabel bereits gespeichert--> inset before?
     let mainTag = document.getElementById('vocabulary_main');
     let div = document.createElement("div");
     div.id=new Date().valueOf();
