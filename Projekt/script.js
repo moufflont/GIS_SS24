@@ -9,55 +9,62 @@ function addElement(event){
     div.className="vocab";
     mainTag.append(div);
 
-    let buttonDelete = document.createElement("button");
-    buttonDelete.textContent="Löschen";
-    buttonDelete.className="vocab_edit";
-    buttonDelete.addEventListener('click',deleteElement);
-    div.append(buttonDelete);
-
-    let buttonSave = document.createElement("button");
+    //buttons
+     let buttonSave = document.createElement("button");
     buttonSave.textContent="Speichern";
     buttonSave.className="vocab_edit";
-    buttonSave.addEventListener('click',saveElement);
+    buttonSave.addEventListener('click', saveElement);
     div.append(buttonSave);
-
+    //input fields
     let inputVocabulary =document.createElement("input");
     inputVocabulary.className="vocab_input";
     inputVocabulary.type="text";
     inputVocabulary.placeholder="Vokabel eingeben...";
     div.append(inputVocabulary);
-    //autofocus
 
     let inputTranslation=document.createElement("input");
     inputTranslation.className="vocab_input";
     inputTranslation.type="text";
     inputTranslation.placeholder="Übersetzung eingeben...";
-    div.appent(inputTranslation);
-    //doesn't work for 2 :/
-
-   //hier sollen 2 neue textfelder erzeugt werden, 
-   //in die Vokabel und Übersetzung eingetragen werden können.
-   //bestätigung soll mit Button funktionieren
+    div.append(inputTranslation);
 }
 function saveElement(event){
-    //eingegebene Vokabel und Übersetzung sollen gespeichert und nicht mehr bearbeitet werden können (nur durch button edit)
-    //->disabled
-    let isVocabulary =document.createElement("input");
+    let divSaved = document.createElement("div");
+    divSaved.className="vocab";
+    divSaved.id=div.id;
+    mainTag.appendChild(divSaved);
+
+    //buttons
+    let buttonDelete = document.createElement("button");
+    buttonDelete.textContent="Löschen";
+    buttonDelete.className="vocab_edit";
+    buttonDelete.addEventListener('click',deleteElement);
+    divSaved.append(buttonDelete);
+
+    let buttonEdit = document.createElement("button");
+    buttonDelete.textContent="Bearbeiten";
+    buttonDelete.className="vocab_edit";
+    buttonDelete.addEventListener('click',editElement);
+    divSaved.append(buttonEdit);
+    //input fields disbled
+    let isVocabulary=document.createElement("input");
     isVocabulary.className="vocab_input";
     isVocabulary.type="text";
-    isVocabulary.id=event.target.parentNode.id;//nötig?
-    div.append(isVocabulary);
+    isVocabulary.disabled=true;
+    isVocabulary.value=document.getElementById(event.target.parentNode.id).value;
+    divSaved.append(isVocabulary);
 
     let isTranslation =document.createElement("input");
     isTranslation.className="vocab_input";
     isTranslation.type="text";
-    isTranslation.id=event.target.parentNode.id;//nötig?
-    div.append(isTranslation);
+    isTranslation.disabled=true;
+    divSaved.append(isTranslation);
 }
 function editElement (event){
     //hier soll Vokabel und Übersetzung bearbeitet und neu gespeichert werden können
     console.log(event.target.parentNode.id); //id aufrufen
     //isVocabulary und isTranslation nichtmehr disabled machen 
+
 }
 function deleteElement(event){
     //hier soll Vokabel und Übersetzung gelöscht werden können
@@ -93,4 +100,8 @@ function showTranslation (ebent){
     <br>
     <input class="vocab_input" type="text" placeholder="Übersetzung eingeben...">
     </div>`;
+
+
+    isTranslation.id=event.target.parentNode.id;
+
 */
