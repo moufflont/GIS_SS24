@@ -1,4 +1,8 @@
 //vokabeln.html
+for (let i = 0; i < localStorage.length; i++) {
+    console.log(localStorage.key(i));
+  }
+
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click',addElement);
 function addElement(event){
@@ -10,7 +14,7 @@ function addElement(event){
     mainTag.append(div);
 
     //buttons
-     let buttonSave = document.createElement("button");
+    let buttonSave = document.createElement("button");
     buttonSave.textContent="Speichern";
     buttonSave.className="vocab_edit";
     buttonSave.addEventListener('click', saveElement);
@@ -19,8 +23,10 @@ function addElement(event){
     let inputVocabulary =document.createElement("input");
     inputVocabulary.className="vocab_input";
     inputVocabulary.type="text";
-    inputVocabulary.placeholder="Vokabel eingeben...";
+    inputVocabulary.placeholder="Vokabel eingeben..."; 
     div.append(inputVocabulary);
+    inputVocabulary.focus(); 
+
 
     let inputTranslation=document.createElement("input");
     inputTranslation.className="vocab_input";
@@ -29,41 +35,45 @@ function addElement(event){
     div.append(inputTranslation);
 }
 function saveElement(event){
-    let divSaved = document.createElement("div");
-    divSaved.className="vocab";
-    divSaved.id=div.id;
-    mainTag.appendChild(divSaved);
+    console.log(event.target.parentNode.id);
+    let divSaved =event.target.parentNode;
 
     //buttons
+    let buttonEdit = document.createElement("button");
+    buttonEdit.textContent="Bearbeiten";
+    buttonEdit.className="vocab_edit";
+    buttonEdit.addEventListener('click',editElement);
+    divSaved.replaceChild(buttonEdit, divSaved.getElementsByTagName('button')[0]);
+
     let buttonDelete = document.createElement("button");
     buttonDelete.textContent="Löschen";
     buttonDelete.className="vocab_edit";
     buttonDelete.addEventListener('click',deleteElement);
-    divSaved.append(buttonDelete);
-
-    let buttonEdit = document.createElement("button");
-    buttonDelete.textContent="Bearbeiten";
-    buttonDelete.className="vocab_edit";
-    buttonDelete.addEventListener('click',editElement);
-    divSaved.append(buttonEdit);
-    //input fields disbled
-    let isVocabulary=document.createElement("input");
-    isVocabulary.className="vocab_input";
-    isVocabulary.type="text";
+    divSaved.insertBefore(buttonDelete, buttonEdit);
+    
+    //input fields
+    let isVocabulary=divSaved.getElementsByTagName('input')[0];
     isVocabulary.disabled=true;
-    isVocabulary.value=document.getElementById(event.target.parentNode.id).value;
-    divSaved.append(isVocabulary);
+    isVocabulary.placeholder="";
 
-    let isTranslation =document.createElement("input");
-    isTranslation.className="vocab_input";
-    isTranslation.type="text";
+    let isTranslation =divSaved.getElementsByTagName('input')[1];
     isTranslation.disabled=true;
-    divSaved.append(isTranslation);
+    isTranslation.placeholder="";
+
+
+    let item = {
+        vocabulary: isVocabulary.value,
+        translation: isTranslation.value,
+        //id: (für Datenbank)
+    };
+
+    localStorage.setItem(divSaved.id,JSON.stringify(item));
+    //JSON.stringify macht object zu string 
+
 }
 function editElement (event){
-    //hier soll Vokabel und Übersetzung bearbeitet und neu gespeichert werden können
     console.log(event.target.parentNode.id); //id aufrufen
-    //isVocabulary und isTranslation nichtmehr disabled machen 
+    //isVocabulary und isTranslation nichtmehr disabled machen und save button
 
 }
 function deleteElement(event){
