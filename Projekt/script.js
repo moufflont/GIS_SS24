@@ -2,6 +2,7 @@
 for (let i = 0; i < localStorage.length; i++) {
     console.log(localStorage.key(i));
   }
+//localStorage.clear();
 
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click',addElement);
@@ -13,12 +14,13 @@ function addElement(event){
     div.className="vocab";
     mainTag.append(div);
 
-    //buttons
+    //button
     let buttonSave = document.createElement("button");
     buttonSave.textContent="Speichern";
     buttonSave.className="vocab_edit";
     buttonSave.addEventListener('click', saveElement);
     div.append(buttonSave);
+
     //input fields
     let inputVocabulary =document.createElement("input");
     inputVocabulary.className="vocab_input";
@@ -26,7 +28,6 @@ function addElement(event){
     inputVocabulary.placeholder="Vokabel eingeben..."; 
     div.append(inputVocabulary);
     inputVocabulary.focus(); 
-
 
     let inputTranslation=document.createElement("input");
     inputTranslation.className="vocab_input";
@@ -36,30 +37,29 @@ function addElement(event){
 }
 function saveElement(event){
     console.log(event.target.parentNode.id);
-    let divSaved =event.target.parentNode;
+    let div =event.target.parentNode;
 
     //buttons
     let buttonEdit = document.createElement("button");
     buttonEdit.textContent="Bearbeiten";
     buttonEdit.className="vocab_edit";
     buttonEdit.addEventListener('click',editElement);
-    divSaved.replaceChild(buttonEdit, divSaved.getElementsByTagName('button')[0]);
+    div.replaceChild(buttonEdit, div.getElementsByTagName('button')[0]);
 
     let buttonDelete = document.createElement("button");
     buttonDelete.textContent="Löschen";
     buttonDelete.className="vocab_edit";
     buttonDelete.addEventListener('click',deleteElement);
-    divSaved.insertBefore(buttonDelete, buttonEdit);
+    div.insertBefore(buttonDelete, buttonEdit);
     
     //input fields
-    let isVocabulary=divSaved.getElementsByTagName('input')[0];
+    let isVocabulary=div.getElementsByTagName('input')[0];
     isVocabulary.disabled=true;
     isVocabulary.placeholder="";
 
-    let isTranslation =divSaved.getElementsByTagName('input')[1];
+    let isTranslation =div.getElementsByTagName('input')[1];
     isTranslation.disabled=true;
     isTranslation.placeholder="";
-
 
     let item = {
         vocabulary: isVocabulary.value,
@@ -67,19 +67,50 @@ function saveElement(event){
         //id: (für Datenbank)
     };
 
-    localStorage.setItem(divSaved.id,JSON.stringify(item));
+    localStorage.setItem(div.id,JSON.stringify(item));
     //JSON.stringify macht object zu string 
-
 }
 function editElement (event){
     console.log(event.target.parentNode.id); //id aufrufen
-    //isVocabulary und isTranslation nichtmehr disabled machen und save button
+    let div=event.target.parentNode;
 
+    //buttons
+    //bearbeiten entfernen
+    div.removeChild(div.getElementsByTagName('button')[0]);
+
+    let buttonSave = document.createElement("button");
+    buttonSave.textContent="Speichern";
+    buttonSave.className="vocab_edit";
+    buttonSave.addEventListener('click', saveElement);
+    div.replaceChild(buttonSave, div.getElementsByTagName('button')[0]);
+
+    //input fields
+    let isVocabulary=div.getElementsByTagName('input')[0];
+    isVocabulary.disabled=false;
+
+    let isTranslation =div.getElementsByTagName('input')[1];
+    isTranslation.disabled=false;
+
+    let item = {
+        vocabulary: isVocabulary.value,
+        translation: isTranslation.value,
+        //id: (für Datenbank)
+    };
+
+    localStorage.setItem(div.id,JSON.stringify(item));
+    //JSON.stringify macht object zu string 
 }
 function deleteElement(event){
     //hier soll Vokabel und Übersetzung gelöscht werden können
     console.log(event.target.parentNode.id);
-    
+    let div=event.target.parentNode;
+
+    //buttons
+    div.removeChild(div.getElementsByTagName('button')[0]);
+    div.removeChild(div.getElementsByTagName('button')[0]);
+    localStorage.removeItem('event.target.parentNode.id');
+    div.removeChild(div.getElementsByTagName('input')[0]);
+    div.removeChild(div.getElementsByTagName('input')[0]);
 }
 
 /*
