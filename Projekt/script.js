@@ -1,8 +1,13 @@
 //vokabeln.html
+//localStorage.clear();
+
 for (let i = 0; i < localStorage.length; i++) {
     console.log(localStorage.key(i));
-  }
-//localStorage.clear();
+    //hier: alle bereits gespeicherten elemente im local storage aufrufen 
+    //und anzeigen lassen
+}
+let emptyDiv = document.createElement("emptyDiv");
+mainTag.append(emptyDiv);
 
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click',addElement);
@@ -12,7 +17,7 @@ function addElement(event){
     let div = document.createElement("div");
     div.id=new Date().valueOf();
     div.className="vocab";
-    mainTag.append(div);
+    mainTag.insertBefore(div, emptyDiv);
 
     //button
     let buttonSave = document.createElement("button");
@@ -108,9 +113,13 @@ function deleteElement(event){
     //buttons
     div.removeChild(div.getElementsByTagName('button')[0]);
     div.removeChild(div.getElementsByTagName('button')[0]);
-    localStorage.removeItem('event.target.parentNode.id');
+//what    //local storage
+    localStorage.removeItem(event.target.parentNode.id);
+    //input fields
     div.removeChild(div.getElementsByTagName('input')[0]);
     div.removeChild(div.getElementsByTagName('input')[0]);
+    //div
+    div.parentNode.removeChild(div);
 }
 
 /*
@@ -130,19 +139,4 @@ translate.addEventListener('click', showTranslation);
 function showTranslation (ebent){
     //übersetzung anzeigen 
 }
-
-
-
- mainTag.innerHTML+=`<div class="vocab">
-    <button class="vocab_edit">Löschen</button>
-    <button class="vocab_edit">Bearbeiten</button>
-    <br>
-    <input class="vocab_input" type="text" placeholder="Vokabel eingeben..." autofocus> 
-    <br>
-    <input class="vocab_input" type="text" placeholder="Übersetzung eingeben...">
-    </div>`;
-
-
-    isTranslation.id=event.target.parentNode.id;
-
 */
