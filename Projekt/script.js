@@ -1,7 +1,6 @@
 //vokabeln.html
 //localStorage.clear();
 let mainTag = document.getElementById('vocabulary_main');
-let item = {};
 
 for (let i = 0; i < localStorage.length; i++) {
     console.log(localStorage.key(i));
@@ -25,19 +24,18 @@ for (let i = 0; i < localStorage.length; i++) {
     div.insertBefore(buttonDelete, buttonEdit);
     
      //input fields
-     let json=JSON.parse(item);
      let inputVocabulary =document.createElement("input");
      inputVocabulary.className="vocab_input";
      inputVocabulary.type="text";
-     inputVocabulary.value=localStorage.getItem(localStorage.key(i));
-     inputVocabulary.value=JSON.parse(json.vocabulary);
+     inputVocabulary.value=JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
+     inputVocabulary.disabled=true;
      div.append(inputVocabulary);
  
      let inputTranslation=document.createElement("input");
      inputTranslation.className="vocab_input";
      inputTranslation.type="text";
-     inputTranslation.value=localStorage.getItem(localStorage.key(i));
-     inputTranslation.value=JSON.parse(json.translation);
+     inputTranslation.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
+     inputTranslation.disabled=true;
      div.append(inputTranslation);
 }
 
@@ -48,7 +46,7 @@ function addElement(event){
     let div = document.createElement("div");
     div.id=new Date().valueOf();
     div.className="vocab";
-        mainTag.append(div);
+    mainTag.append(div);
 
     //button
     let buttonSave = document.createElement("button");
@@ -72,9 +70,7 @@ function addElement(event){
     div.append(inputTranslation);
 }
 function saveElement(event){
-    console.log(event.target.parentNode.id);
     let div =event.target.parentNode;
-    //input und buttons löschen und extra anzeigen durch local storage?
 
     //buttons
     let buttonEdit = document.createElement("button");
@@ -98,9 +94,9 @@ function saveElement(event){
     isTranslation.disabled=true;
     isTranslation.placeholder="";
 
-    item += {
+    let item = {
        "vocabulary": isVocabulary.value,
-        "translation": isTranslation.value,
+        "translation": isTranslation.value
         //id: (für Datenbank)
     };
 
@@ -108,7 +104,6 @@ function saveElement(event){
     //JSON.stringify macht object zu string 
 }
 function editElement (event){
-    console.log(event.target.parentNode.id); //id aufrufen
     let div=event.target.parentNode;
 
     //buttons
@@ -139,17 +134,18 @@ function editElement (event){
 }
 function deleteElement(event){
     //hier soll Vokabel und Übersetzung gelöscht werden können
-    console.log(event.target.parentNode.id);
-    let div=event.target.parentNode;
+    let div = event.target.parentNode;
+    console.log(div.id);
 
     //buttons
     div.removeChild(div.getElementsByTagName('button')[0]);
     div.removeChild(div.getElementsByTagName('button')[0]);
-    //local storage
-    localStorage.removeItem(event.target.parentNode.id);
     //input fields
     div.removeChild(div.getElementsByTagName('input')[0]);
     div.removeChild(div.getElementsByTagName('input')[0]);
     //div
     div.parentNode.removeChild(div);
+    //local storage
+    console.log("ID des zu löschenden Divs:", div.id);
+    localStorage.removeItem(div.id);
 }
