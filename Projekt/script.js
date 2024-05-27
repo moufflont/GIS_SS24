@@ -84,7 +84,6 @@ function saveElement(event){
     buttonDelete.addEventListener('click',deleteElement);
     div.insertBefore(buttonDelete, buttonEdit);
 
-    
     //input fields
     let isVocabulary=div.getElementsByTagName('input')[0];
     isVocabulary.disabled=true;
@@ -149,7 +148,6 @@ function deleteElement(event){
     localStorage.removeItem(div.id);
 }
 
-
 //lernmodus_karteikarten.html
 let startFlashcards = document.getElementById('lmFlashcards');
 startFlashcards.addEventListener('click',showFlashcards);
@@ -176,7 +174,6 @@ function showTranslation (event){
     word.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
     mainTag.append(word);
 }
-
 
 //lernmodus_uebersetzen.html
 
