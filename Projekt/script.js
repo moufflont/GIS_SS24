@@ -1,23 +1,54 @@
 //vokabeln.html
 //localStorage.clear();
+let mainTag = document.getElementById('vocabulary_main');
+let item = {};
 
 for (let i = 0; i < localStorage.length; i++) {
     console.log(localStorage.key(i));
-    //hier: alle bereits gespeicherten elemente im local storage aufrufen 
-    //und anzeigen lassen
+
+    let div = document.createElement("div");
+    div.id=new Date().valueOf();
+    div.className="vocab";
+    mainTag.append(div);
+
+    //buttons
+    let buttonEdit = document.createElement("button");
+    buttonEdit.textContent="Bearbeiten";
+    buttonEdit.className="vocab_edit";
+    buttonEdit.addEventListener('click',editElement);
+    div.append(buttonEdit, div.getElementsByTagName('button')[0]);
+
+    let buttonDelete = document.createElement("button");
+    buttonDelete.textContent="Löschen";
+    buttonDelete.className="vocab_edit";
+    buttonDelete.addEventListener('click',deleteElement);
+    div.insertBefore(buttonDelete, buttonEdit);
+    
+     //input fields
+     let json=JSON.parse(item);
+     let inputVocabulary =document.createElement("input");
+     inputVocabulary.className="vocab_input";
+     inputVocabulary.type="text";
+     inputVocabulary.value=localStorage.getItem(localStorage.key(i));
+     inputVocabulary.value=JSON.parse(json.vocabulary);
+     div.append(inputVocabulary);
+ 
+     let inputTranslation=document.createElement("input");
+     inputTranslation.className="vocab_input";
+     inputTranslation.type="text";
+     inputTranslation.value=localStorage.getItem(localStorage.key(i));
+     inputTranslation.value=JSON.parse(json.translation);
+     div.append(inputTranslation);
 }
-let emptyDiv = document.createElement("emptyDiv");
-mainTag.append(emptyDiv);
 
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click',addElement);
 function addElement(event){
-    //if id>0, also wenn vokabel bereits gespeichert--> inset before?
-    let mainTag = document.getElementById('vocabulary_main');
+    console.log(event.target.parentNode.id);
     let div = document.createElement("div");
     div.id=new Date().valueOf();
     div.className="vocab";
-    mainTag.insertBefore(div, emptyDiv);
+        mainTag.append(div);
 
     //button
     let buttonSave = document.createElement("button");
@@ -43,6 +74,7 @@ function addElement(event){
 function saveElement(event){
     console.log(event.target.parentNode.id);
     let div =event.target.parentNode;
+    //input und buttons löschen und extra anzeigen durch local storage?
 
     //buttons
     let buttonEdit = document.createElement("button");
@@ -66,9 +98,9 @@ function saveElement(event){
     isTranslation.disabled=true;
     isTranslation.placeholder="";
 
-    let item = {
-        vocabulary: isVocabulary.value,
-        translation: isTranslation.value,
+    item += {
+       "vocabulary": isVocabulary.value,
+        "translation": isTranslation.value,
         //id: (für Datenbank)
     };
 
@@ -98,7 +130,7 @@ function editElement (event){
 
     let item = {
         vocabulary: isVocabulary.value,
-        translation: isTranslation.value,
+        translation: isTranslation.value
         //id: (für Datenbank)
     };
 
@@ -113,7 +145,7 @@ function deleteElement(event){
     //buttons
     div.removeChild(div.getElementsByTagName('button')[0]);
     div.removeChild(div.getElementsByTagName('button')[0]);
-//what    //local storage
+    //local storage
     localStorage.removeItem(event.target.parentNode.id);
     //input fields
     div.removeChild(div.getElementsByTagName('input')[0]);
@@ -121,22 +153,3 @@ function deleteElement(event){
     //div
     div.parentNode.removeChild(div);
 }
-
-/*
-//lernmodus_karteikarten.html
-let previous = document.getElementsByClassName('previous');
-previous.addEventListener('click', showPrevoiusElement);
-function showPreviousElement(event){
-    //vorherige Vokabel wieder anzeigen
-}
-let next =document.getElementsByClassName('next'); // auch lernmodus_uebersetzung.html
-next.addEventListener('click', showNextElement);
-function showNextElement (event){
-    //weiter zur nächsten vokabel
-}
-let translate=document.getElementsByClassName('show_translation');
-translate.addEventListener('click', showTranslation);
-function showTranslation (ebent){
-    //übersetzung anzeigen 
-}
-*/
