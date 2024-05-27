@@ -22,20 +22,20 @@ for (let i = 0; i < localStorage.length; i++) {
     buttonDelete.addEventListener('click',deleteElement);
     div.insertBefore(buttonDelete, buttonEdit);
     
-     //input fields
-     let inputVocabulary =document.createElement("input");
-     inputVocabulary.className="vocab_input";
-     inputVocabulary.type="text";
-     inputVocabulary.value=JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
-     inputVocabulary.disabled=true;
-     div.append(inputVocabulary);
+    //input fields
+    let inputVocabulary =document.createElement("input");
+    inputVocabulary.className="vocab_input";
+    inputVocabulary.type="text";
+    inputVocabulary.value=JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
+    inputVocabulary.disabled=true;
+    div.append(inputVocabulary);
  
-     let inputTranslation=document.createElement("input");
-     inputTranslation.className="vocab_input";
-     inputTranslation.type="text";
-     inputTranslation.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-     inputTranslation.disabled=true;
-     div.append(inputTranslation);
+    let inputTranslation=document.createElement("input");
+    inputTranslation.className="vocab_input";
+    inputTranslation.type="text";
+    inputTranslation.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
+    inputTranslation.disabled=true;
+    div.append(inputTranslation);
 }
 
 let addVocabulary = document.getElementById('add');
@@ -72,17 +72,18 @@ function saveElement(event){
     let div =event.target.parentNode;
 
     //buttons
-    let buttonDelete = document.createElement("button");
-    buttonDelete.textContent="Löschen";
-    buttonDelete.className="vocab_edit";
-    buttonDelete.addEventListener('click',deleteElement);
-    div.replaceChild(buttonDelete, div.getElementsByTagName('button')[0]);
-
     let buttonEdit = document.createElement("button");
     buttonEdit.textContent="Bearbeiten";
     buttonEdit.className="vocab_edit";
     buttonEdit.addEventListener('click',editElement);
-    div.append(buttonEdit);
+    div.replaceChild(buttonEdit, div.getElementsByTagName('button')[0]);
+
+    let buttonDelete = document.createElement("button");
+    buttonDelete.textContent="Löschen";
+    buttonDelete.className="vocab_edit";
+    buttonDelete.addEventListener('click',deleteElement);
+    div.insertBefore(buttonDelete, buttonEdit);
+
     
     //input fields
     let isVocabulary=div.getElementsByTagName('input')[0];
@@ -94,7 +95,7 @@ function saveElement(event){
     isTranslation.placeholder="";
 
     let item = {
-       "vocabulary": isVocabulary.value,
+        "vocabulary": isVocabulary.value,
         "translation": isTranslation.value
         //id: (für Datenbank)
     };
@@ -132,7 +133,6 @@ function editElement (event){
     //JSON.stringify macht object zu string 
 }
 function deleteElement(event){
-    //hier soll Vokabel und Übersetzung gelöscht werden können
     let div = event.target.parentNode;
     console.log(div.id);
 
@@ -156,9 +156,10 @@ startFlashcards.addEventListener('click',showFlashcards);
 let count=0;
 
 function showFlashcards(event){
+    //span element anstelle von a? https://uhahne.github.io/GIS/lecture/html/13
     let word =document.createElement("a");
-    word.value=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
-    mainTag.replaceChild(word,getElementsByTagName('a'));
+    word.textContent=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
+    mainTag.replaceChild(word,mainTag.getElementsByTagName('a')[0]);
     
     let next =document.getElementsByClassName('next');
     next.addEventListener('click', showNextElement);
@@ -171,6 +172,7 @@ function showNextElement (event){
     showFlashcards;
 }
 function showTranslation (event){
+    //word erstellen und hinzufügen
     word.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
     mainTag.append(word);
 }
