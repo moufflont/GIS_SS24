@@ -5,7 +5,7 @@ for (let i = 0; i < localStorage.length; i++) {
     //console.log(localStorage.key(i));
 
     let div = document.createElement("div");
-    div.id=new Date().valueOf();
+    div.id=localStorage.key(i);
     div.className="vocab";
     mainTag.append(div);
 
@@ -14,7 +14,7 @@ for (let i = 0; i < localStorage.length; i++) {
     buttonEdit.textContent="Bearbeiten";
     buttonEdit.className="vocab_edit";
     buttonEdit.addEventListener('click',editElement);
-    div.append(buttonEdit, div.getElementsByTagName('button')[0]);
+    div.append(buttonEdit);
 
     let buttonDelete = document.createElement("button");
     buttonDelete.textContent="Löschen";
@@ -146,72 +146,4 @@ function deleteElement(event){
     //local storage
     console.log("ID des zu löschenden Divs:", div.id);
     localStorage.removeItem(div.id);
-}
-
-//lernmodus_karteikarten.html
-let startFlashcards = document.getElementById('lmFlashcards');
-startFlashcards.addEventListener('click',showFlashcards);
-let count=0;
-
-function showFlashcards(event){
-    //span element anstelle von a? https://uhahne.github.io/GIS/lecture/html/13
-    let word =document.createElement("a");
-    word.textContent=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
-    mainTag.replaceChild(word,mainTag.getElementsByTagName('a')[0]);
-    
-    let next =document.getElementsByClassName('next');
-    next.addEventListener('click', showNextElement);
-
-    let translate=document.getElementsByClassName('show_translation');
-    translate.addEventListener('click', showTranslation);
-}
-function showNextElement (event){
-    count=count+1;
-    showFlashcards;
-}
-function showTranslation (event){
-    //word erstellen und hinzufügen
-    word.value=JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-    mainTag.append(word);
-}
-
-//lernmodus_uebersetzen.html
-
-let startTranslate = document.getElementById('lmTranslate');
-startTranslate.addEventListener('click',showTranslate);
-count=0;
-
-function showTranslate(event){
-    let word =document.createElement("a");
-    word.value=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
-    mainTag.replaceChild(word,getElementsByTagName('a'));
-
-    //input field
-    let inputTranslation =document.createElement("input");
-    inputTranslation.className="vocab_input";
-    inputTranslation.type="text";
-    inputTranslation.placeholder="Hier Übersetzung eingeben..."; 
-    div.insertBefore(inputTranslation, getElementsByTagName('br')[1]);
-    inputVocabulary.focus(); 
-    
-    let next =document.getElementsByClassName('next');
-    next.addEventListener('click', showNextElement);
-
-    let checkTranslation=document.getElementsByClassName('show_translation');
-    translate.addEventListener('click', check);
-}
-function showNextElement (event){
-    count=count+1;
-    showTranslate;
-}
-function check(event){
-    let answer =document.createElement("a");
-    if(getElementsByTagName('input').value==JSON.parse(localStorage.getItem(localStorage.key(i))).translation){
-        answer.value="Richtig!";
-        mainTag.append('answer');
-    }
-    else{
-        answer.value="Falsch!";
-        mainTag.append('answer');
-    }
 }
