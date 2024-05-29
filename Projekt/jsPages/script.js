@@ -45,7 +45,7 @@ function addElement(event){
     let div = document.createElement("div");
     div.id=new Date().valueOf();
     div.className="vocab";
-    mainTag.append(div);
+    mainTag.insertBefore(div,mainTag.getElementsByTagName('div')[0]);
 
     //button
     let buttonSave = document.createElement("button");

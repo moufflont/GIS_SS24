@@ -5,7 +5,7 @@
     --dark-yellow: rgba(71, 41, 13, 0.235);
     --white: white;
   }
-a{
+a, span{
     color: var(--white);
     text-decoration: none;
 }
