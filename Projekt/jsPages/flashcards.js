@@ -18,7 +18,7 @@ div.append(someSpace);
 
 //buttons
 let buttonPrevious = document.createElement("button");
-buttonPrevious.textContent="Vorherige";
+buttonPrevious.textContent="Zurück";
 buttonPrevious.className="learning_buttons float_left";
 buttonPrevious.addEventListener('click',showPreviousElement);
 div.append(buttonPrevious);
@@ -30,7 +30,7 @@ buttonShowTranslation.addEventListener('click',showTranslation);
 div.append(buttonShowTranslation);
 
 let buttonNext = document.createElement("button");
-buttonNext.textContent="Nächste";
+buttonNext.textContent="Weiter";
 buttonNext.className="learning_buttons float_right";
 buttonNext.addEventListener('click',showNextElement);
 div.append(buttonNext);

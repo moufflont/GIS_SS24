@@ -57,6 +57,8 @@ function showNextElement (event){
         count=count+1;
         word.textContent=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
         div.replaceChild(word, word);
+        checkInput.value="";
+        checkInput.focus(); 
     }
 }
 function showPreviousElement (event){
@@ -73,6 +75,8 @@ function showPreviousElement (event){
         count=count-1;
         word.textContent=JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
         div.replaceChild(word, word);
+        checkInput.value="";
+        checkInput.focus();
     }
 }
 function check(event){
@@ -83,7 +87,7 @@ function check(event){
         // Nachricht wieder ausblenden; mit ChatGPT erstellt
         setTimeout(() => {
             answer.style.display = 'none';
-        }, 2500);
+        }, 3000);
     }
     else{
         answer.textContent="Leider falsch. Die richtige Antwort lautet: "+ JSON.parse(localStorage.getItem(localStorage.key(count))).translation;;
