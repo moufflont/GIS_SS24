@@ -1,83 +1,97 @@
 :root {
     --blue: rgb(11, 63, 84);
-    --dark-blue: rgba(1, 53, 84,0.150);
+    --dark-blue: rgba(1, 53, 84, 0.150);
     --yellow: rgb(121, 91, 13);
     --dark-yellow: rgba(71, 41, 13, 0.235);
     --white: white;
-  }
-a, span{
+}
+
+a,
+span {
     color: var(--white);
     text-decoration: none;
 }
-body{
+
+body {
     background-color: var(--blue);
     font-family: 'Courier New', Courier, monospace;
 }
-header{
+
+header {
     background-color: var(--yellow);
     min-height: 90px;
     text-align: center;
-    padding-top:15px;
+    padding-top: 15px;
 }
-.heading{
+
+.heading {
     font-size: 30px;
     color: var(--blue);
 }
-.nav_buttons{
+
+.nav_buttons {
     font-size: 17px;
     color: var(--blue);
-    padding:3px;
+    padding: 3px;
     background-color: var(--dark-blue);
-    margin:15px;
+    margin: 15px;
 }
-.float_left{
-    float:left;
+
+.float_left {
+    float: left;
 }
-.float_right{
-    float:right;
+
+.float_right {
+    float: right;
 }
-.learningmethod{
+
+.learningmethod {
     text-align: center;
     font-size: 23px;
     background-color: var(--dark-yellow);
     width: 40%;
-    height:120px;
+    height: 120px;
     padding: 10px 5px 3px 3px;
     border-color: var(--yellow);
     border-width: 2px;
     border-style: solid;
     margin: 5% 3%;
 }
-#flashcards_img{
-    height:70%;
+
+#flashcards_img {
+    height: 70%;
 }
-#translate_img{
+
+#translate_img {
     height: 90%;
 }
-#add{
+
+#add {
     background-color: var(--dark-yellow);
     border: var(--yellow) 2px solid;
     color: var(--white);
     font-family: 'Courier New', Courier, monospace;
     font-size: 17px;
     text-decoration: none;
-    width:94%;
+    width: 94%;
     padding: 20px;
     margin: 20px 3% 5px 3%;
     cursor: pointer;
 }
-.vocab_input{
+
+.vocab_input {
     float: inline-start;
     background-color: var(--blue);
     border: var(--yellow) 1px solid;
     color: var(--white);
     font-family: 'Courier New', Courier, monospace;
     font-size: 15px;
-    width:98%;
+    width: 98%;
     padding: 4px;
     margin: 3px;
 }
-.vocab_edit{
+
+.vocab_edit {
     float: inline-start;
     background-color: var(--dark-yellow);
     border: var(--yellow) 1.5px dotted;
@@ -91,17 +105,18 @@ header{
     margin-top: 20px;
     cursor: pointer;
 }
-.learning_questionare{
+
+.learning_questionare {
     float: inline-start;
     text-align: center;
     font-size: 25px;
-    width:90%;
+    width: 90%;
     padding: 30px 2%;
     border: var(--yellow) 2px solid;
     margin: 30px 3%;
 }
 
-.learning_buttons{
+.learning_buttons {
     background-color: var(--dark-yellow);
     border: var(--yellow) 1px solid;
     color: var(--white);
