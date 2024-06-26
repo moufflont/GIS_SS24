@@ -1,50 +1,69 @@
 //beautifying code: Shift + Alt + F
+
+//const { get } = require("http");
+
 //vokabeln.html
 let mainTag = document.getElementById('vocabulary_main');
+loadVocabulary();
 
-for (let i = 0; i < localStorage.length; i++) {
-    //console.log(localStorage.key(i));
+//server anfragen
+async function loadVocabulary() { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
 
-    let div = document.createElement("div");
-    div.id = localStorage.key(i);
-    div.className = "vocab";
-    mainTag.append(div);
+    const response = await fetch('http://127.0.0.1:3000/getVocabulary');
+    const text = await response.text();
 
-    //buttons
-    let buttonEdit = document.createElement("button");
-    buttonEdit.textContent = "Bearbeiten";
-    buttonEdit.className = "vocab_edit";
-    buttonEdit.addEventListener('click', editElement);
-    div.append(buttonEdit);
+    let getVocabularyCollection = JSON.parse(text); //abrufen 
+    console.log(getVocabularyCollection);
 
-    let buttonDelete = document.createElement("button");
-    buttonDelete.textContent = "Löschen";
-    buttonDelete.className = "vocab_edit";
-    buttonDelete.addEventListener('click', deleteElement);
-    div.insertBefore(buttonDelete, buttonEdit);
+    for (let i = 0; i < localStorage.length; i++) { //i<db.length
+        //console.log("local: " + localStorage.key(i));
 
-    //input fields
-    let inputVocabulary = document.createElement("input");
-    inputVocabulary.className = "vocab_input";
-    inputVocabulary.type = "text";
-    inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
-    inputVocabulary.disabled = true;
-    div.append(inputVocabulary);
+        let div = document.createElement("div");
+        //div.id = localStorage.key(i);
+        div.id = getVocabularyCollection.id[i]; //wie id an stelle i in db?
+        div.className = "vocab";
+        mainTag.append(div);
 
-    let inputTranslation = document.createElement("input");
-    inputTranslation.className = "vocab_input";
-    inputTranslation.type = "text";
-    inputTranslation.value = JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-    inputTranslation.disabled = true;
-    div.append(inputTranslation);
+        //buttons
+        let buttonEdit = document.createElement("button");
+        buttonEdit.textContent = "Bearbeiten";
+        buttonEdit.className = "vocab_edit";
+        buttonEdit.addEventListener('click', editElement);
+        div.append(buttonEdit);
+
+        let buttonDelete = document.createElement("button");
+        buttonDelete.textContent = "Löschen";
+        buttonDelete.className = "vocab_edit";
+        buttonDelete.addEventListener('click', deleteElement);
+        div.insertBefore(buttonDelete, buttonEdit);
+
+        //input fields
+        let inputVocabulary = document.createElement("input");
+        inputVocabulary.className = "vocab_input";
+        inputVocabulary.type = "text";
+        //inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
+        inputVocabulary.value = getVocabularyCollection.vocabulary[i]; //wo id i einbauen?
+
+        inputVocabulary.disabled = true;
+        div.append(inputVocabulary);
+
+        let inputTranslation = document.createElement("input");
+        inputTranslation.className = "vocab_input";
+        inputTranslation.type = "text";
+        //inputTranslation.value = JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
+        inputTranspaltion.value=getVocabularyCollection.translation[i]; //wo id i einbauen?
+        inputTranslation.disabled = true;
+        div.append(inputTranslation);
+    }
 }
 
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click', addElement);
 function addElement(event) {
-    console.log(event.target.parentNode.id);
+    //console.log(event.target.parentNode.id);
     let div = document.createElement("div");
-    div.id = new Date().valueOf();
+    //div.id = new Date().valueOf();
+    div.id;
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -96,12 +115,14 @@ function saveElement(event) {
 
     let item = {
         "vocabulary": isVocabulary.value,
-        "translation": isTranslation.value
-        //id: (für Datenbank)
+        "translation": isTranslation.value,
+        "id": div.id
     };
 
-    localStorage.setItem(div.id, JSON.stringify(item));
+    //localStorage.setItem(div.id, JSON.stringify(item));
     //JSON.stringify macht object zu string
+
+    const response = fetch('http://127.0.0.1:3000/addVocabulary', {method: 'post', body:jsonString,});
 }
 function editElement(event) {
     let div = event.target.parentNode;

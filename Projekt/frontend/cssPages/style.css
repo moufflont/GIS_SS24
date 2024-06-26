@@ -111,7 +111,7 @@ header {
     text-align: center;
     font-size: 25px;
     width: 90%;
-    padding: 30px 2%;
+    padding: 30px 2% 30px 2%;
     border: var(--yellow) 2px solid;
     margin: 30px 3%;
 }
