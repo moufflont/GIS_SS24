@@ -1,28 +1,33 @@
 //beautifying code: Shift + Alt + F
 
-//const { get } = require("http");
-
 // für übergabe in url bspw. schreiben: ?itemId=1&itemV=cat&itemT=Katze
 
 //vokabeln.html
 let mainTag = document.getElementById('vocabulary_main');
-loadVocabulary();
+loadVocabulary(urlgetVoc);
+
+//parameters to be added with urleditVoc+=...
+let urlgetVoc = "http://127.0.0.1:3000/getVocabulary";
+let urlselectVoc = "http://127.0.0.1:3000/selectVocabulary";
+let urladdVoc = "http://127.0.0.1:3000/addVocabulary";
+let urldeleteVoc = "http://127.0.0.1:3000/deleteVocabulary";
+let urleditVoc = "http://127.0.0.1:3000/editVocabulary";
 
 //server anfragen
-async function loadVocabulary() { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
+async function loadVocabulary(url) { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
 
-    const response = await fetch('http://127.0.0.1:3000/getVocabulary');
-    const text = await response.text();
+    const response = await fetch(url);
+    const data = await response.json();
+    let text = data.text;
+    console.log('data' + data);
+    console.log('text' + text);
 
-    let getVocabularyCollection = JSON.parse(text); //abrufen 
-    console.log(getVocabularyCollection);
-
-    for (let i = 0; i < localStorage.length; i++) { //i<db.length
+    for (let i = 0; i < text.length(); i++) { //i<db.length
         //console.log("local: " + localStorage.key(i));
 
         let div = document.createElement("div");
         //div.id = localStorage.key(i);
-        div.id = getVocabularyCollection.id[i]; //wie id an stelle i in db?
+        div.id = text.key(i); //wie id an stelle i in db?
         div.className = "vocab";
         mainTag.append(div);
 
@@ -44,7 +49,7 @@ async function loadVocabulary() { //await muss in funktion sein; for auch drin, 
         inputVocabulary.className = "vocab_input";
         inputVocabulary.type = "text";
         //inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
-        inputVocabulary.value = fetch('http://127.0.0.1:3000/getVocabulary');; //wo id i einbauen?
+        inputVocabulary.value = JSON.parse(urlselectVoc + "?itemId=i").vocabulary;
 
         inputVocabulary.disabled = true;
         div.append(inputVocabulary);
@@ -53,7 +58,7 @@ async function loadVocabulary() { //await muss in funktion sein; for auch drin, 
         inputTranslation.className = "vocab_input";
         inputTranslation.type = "text";
         //inputTranslation.value = JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-        inputTranslation.value=getVocabularyCollection.translation[i]; //wo id i einbauen?
+        inputTranslation.value = JSON.parse(urlselectVoc + "?itemId=i").translation;
         inputTranslation.disabled = true;
         div.append(inputTranslation);
     }
@@ -65,7 +70,7 @@ function addElement(event) {
     //console.log(event.target.parentNode.id);
     let div = document.createElement("div");
     //div.id = new Date().valueOf();
-    div.id;
+    div.id; //braucht es diese?
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -115,7 +120,7 @@ function saveElement(event) {
     isTranslation.disabled = true;
     isTranslation.placeholder = "";
 
-    let item = { 
+    let item = {
         "vocabulary": isVocabulary.value,
         "translation": isTranslation.value,
         "id": div.id
@@ -123,8 +128,7 @@ function saveElement(event) {
 
     //localStorage.setItem(div.id, JSON.stringify(item));
     //JSON.stringify macht object zu string
-
-    const response = fetch('http://127.0.0.1:3000/addVocabulary', {method: 'post', body:jsonString,});
+    //wie urladdVocabulary nutzen in angepasster form mit ?itemT=&itemV=
 }
 function editElement(event) {
     let div = event.target.parentNode;
@@ -154,6 +158,7 @@ function editElement(event) {
 
     localStorage.setItem(div.id, JSON.stringify(item));
     //JSON.stringify macht object zu string
+    //urleditVoc erweitern mit ?itemT=usw
 }
 function deleteElement(event) {
     let div = event.target.parentNode;
@@ -168,6 +173,8 @@ function deleteElement(event) {
     //div
     div.parentNode.removeChild(div);
     //local storage
-    console.log("ID des zu löschenden Divs:", div.id);
-    localStorage.removeItem(div.id);
+    //console.log("ID des zu löschenden Divs:", div.id);
+    //localStorage.removeItem(div.id);
+    //data löschen
+    //mit urldeleteVoc?itemId=div.id
 }

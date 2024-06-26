@@ -1,66 +1,69 @@
 const http = require('http');
-
 const hostname = '127.0.0.1'; // localhost
 const port = 3000;
 
-//Beispiel-Vokabeln
-let voc =[{vocabulary:"picture", translation:"Bild"},{vocabulary:"house", translation:"Haus"}]; // anstelle von array mit datenbank arbeiten
+const sqlite3= require('sqlite3').verbose();
+let sqlmessage;
+let result;
 
-//wohin?
-//opening database
-import sqlite3 from 'sqlite3';
-import {open} from 'sqlite';
-(async ()=>{
-  const db= await open({
-    filename: '/database/database.db',
-    driver: sqlite3.Database
-  })
-})
+//connect to DB
+const db =  new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE,(err)=>{
+    if(err) return console.error(err.message);
+});
 
-//tabelle erstellen
-db.exec('CREATE TABLE IF NOT EXISTS vocabularyCollection (id INT, vocabulary TEXT, translation TEXT)');
+//create table
+sqlmessage='CREATE TABLE IF NOT EXISTS vocabularyCollection (id INTEGER PRIMARY KEY,vocabulary,translation)';
+db.run(sqlmessage);
 
-const server = http.createServer((request, response) => { //request vom client; response vom server
-  response.statusCode = 200;
-  response.setHeader("Content-Type", "text/html"); //hier anstelle text/plain html nennen und auf html seiten verweisen? oder application/json?
-  //response.setHeader('Access-Control-Allow-Origin', '*'); // on CORS error
+ const server = http.createServer((request, response) => { //request vom client; response vom server
+   response.statusCode = 200;
+   response.setHeader("Content-Type", "text/html");
+   response.setHeader('Access-Control-Allow-Origin', '*'); // on CORS error
 
-  const url = new URL(request.url || '', 'http://${request.headers.host}'); 
+   const url = new URL(request.url || '', 'http://${request.headers.host}'); 
   
   switch (url.pathname) {
     case '/':
-    response.write('Hello');
-    break;
+      response.write('Hello');
+      break;
     case '/getVocabulary': //url-Anhang
-    const result= db.all('SELECT * FROM vocabularxCollection');
-      response.write(JSON.stringify(result));
+      sqlmessage='SELECT * FROM  vocabularyCollection';
+      result=db.all(sqlmessage,(err)=>{
+        if(err) return console.error(err.message);
+      })
+      response.on(JSON.stringify(result));
       break;
     case '/selectVocabulary': //für einzelne
-    if()
-      response.write(JSON.stringify(db.get('SELECT ')))
-    case '/addVocabulary': 
-      request.on(db.run('INSERT INTO vocabularyCollection (id) VALUES(itemId)'));
-      request.on(db.run('INSERT INTO vocabularyCollection (vocabulary) VALUES(itemV)'));
-      request.on(db.run('INSERT INTO vocabularyCollection (translation) VALUES(itemT)'));
-
-//      if (request.method === 'POST') {
-//        let jsonString = '';
-//        request.on('data', (data) => { //solange daten kommen, sollen sie aufaddiert werden (string wird zerlegt)
-//          jsonString += data;
-//        });
-//        request.on('end', () => {
-//          console.log(JSON.parse(jsonString));
-//          voc+= JSON.parse(jsonString); //hier geparsten jsonString zu array voc hinzufügen
-//        });
-//      }
+      sqlmessage='SELECT * FROM vocabularyCollection WHERE id=?';
+      result = db.all(sqlmessage,[itemId],(err,rows)=>{
+            if(err) return console.error(err.message);
+                rows.forEach(row=>{
+                    console.log(row);
+                    response.on(JSON.stringify(row));
+                })
+              })
       break;
-    case '/deleteVocabulary': 
-      const requestMessage = db.run('DELETE FROM vocabularyCollection WHERE id=itemId');
-      request.on(requestMessage);
+    case '/addVocabulary': 
+      sqlmessage='INSERT INTO vocabularyCollection(vocabulary,translation) VALUES(?,?)';
+      db.run(sqlmessage,[JSON.parse(itemV),JSON.parse(itemT)], (err)=>{ //funktioniert, wenn itemV und itemT durch "wörter" ausgetauscht werden
+        return console.error(err.message);
+      })
+      break;
+    case '/deleteVocabulary': //nicht getestet
+      sqlmessage='DELETE FROM vocabularyCollection WHERE id=?';
+      db.run(sqlmessage, [itemId],(err)=>{ //wie macht man das mit beliebigen parametern?
+        if(err) return console.error(err.message);
+      })
       break;
     case '/editVocabulary': //auch hier id nach ? in url übergeben
-      request.on(db.run('UPDATE vocbularyCollection SET vocabulary = itemV WHERE id=itemId'));
-      request.on(db.run('UPDATE vocabularyCollection SET translation =itemT WHERE id=itemId'));
+     sqlmessage='UPDATE vocabularyCollection SET vocabulary=? WHERE id=?';
+     db.run (sqlmessage,[JSON.parse(itemV),itemId],(err)=>{
+      if(err) return console.error(err.message);
+     })
+     sqlmessage='UPDATE vocabularyCollection SET translation=? WHERE id=?';
+     db.run(sqlmessage,[JSON.parse(itemT),itemId],(err)=>{
+      if(err) return console.error(err.message);
+     })
       break;
     default:
       response.statusCode = 404;
