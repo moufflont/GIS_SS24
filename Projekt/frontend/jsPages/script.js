@@ -113,7 +113,7 @@ function saveElement(event) {
     isTranslation.disabled = true;
     isTranslation.placeholder = "";
 
-    let item = {
+    let item = { 
         "vocabulary": isVocabulary.value,
         "translation": isTranslation.value,
         "id": div.id

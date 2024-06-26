@@ -29,7 +29,7 @@ const server = http.createServer((request, response) => {//request vom client; r
       response.write(JSON.stringify(result));
       break;
     case '/addVocabulary': 
-      request.on(response);
+      request.on(response); 
 
       //request.on(db.run('INSERT INTO vocabularyCollection (id) VALUES(item)'));
       //request.on(db.run('INSERT INTO vocabularyCollection (vocabulary) VALUES(item2)'));
