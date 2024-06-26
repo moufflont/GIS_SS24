@@ -2,6 +2,8 @@
 
 //const { get } = require("http");
 
+// für übergabe in url bspw. schreiben: ?itemId=1&itemV=cat&itemT=Katze
+
 //vokabeln.html
 let mainTag = document.getElementById('vocabulary_main');
 loadVocabulary();
@@ -42,7 +44,7 @@ async function loadVocabulary() { //await muss in funktion sein; for auch drin, 
         inputVocabulary.className = "vocab_input";
         inputVocabulary.type = "text";
         //inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
-        inputVocabulary.value = getVocabularyCollection.vocabulary[i]; //wo id i einbauen?
+        inputVocabulary.value = fetch('http://127.0.0.1:3000/getVocabulary');; //wo id i einbauen?
 
         inputVocabulary.disabled = true;
         div.append(inputVocabulary);
@@ -51,7 +53,7 @@ async function loadVocabulary() { //await muss in funktion sein; for auch drin, 
         inputTranslation.className = "vocab_input";
         inputTranslation.type = "text";
         //inputTranslation.value = JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-        inputTranspaltion.value=getVocabularyCollection.translation[i]; //wo id i einbauen?
+        inputTranslation.value=getVocabularyCollection.translation[i]; //wo id i einbauen?
         inputTranslation.disabled = true;
         div.append(inputTranslation);
     }
