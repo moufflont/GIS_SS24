@@ -61,8 +61,8 @@ let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click', addElement);
 function addElement(event) {
     let div = document.createElement("div");
-    //div.id = new Date().valueOf();
-    //div.id;
+    //E-Mail-Frage
+    div.id;
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -89,7 +89,6 @@ function addElement(event) {
 }
 function saveElement(event) {
     let div = event.target.parentNode;
-    //div.id wie?
 
     //buttons
     let buttonEdit = document.createElement("button");
