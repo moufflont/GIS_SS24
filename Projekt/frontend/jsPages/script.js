@@ -4,10 +4,10 @@
 
 //parameters to be added with urleditVoc+=...
 let urlgetVoc = "http://127.0.0.1:3000/getVocabulary";
-let urlselectVoc = "http://127.0.0.1:3000/selectVocabulary";
-let urladdVoc = "http://127.0.0.1:3000/addVocabulary";
-let urldeleteVoc = "http://127.0.0.1:3000/deleteVocabulary";
-let urleditVoc = "http://127.0.0.1:3000/editVocabulary";
+let urlselectVoc = "http://127.0.0.1:3000/selectVocabulary?itemId=";
+let urladdVoc = "http://127.0.0.1:3000/addVocabulary?";
+let urldeleteVoc = "http://127.0.0.1:3000/deleteVocabulary?itemId=";
+let urleditVoc = "http://127.0.0.1:3000/editVocabulary?itemId=";
 
 //vokabeln.html
 let mainTag = document.getElementById('vocabulary_main');
@@ -15,18 +15,14 @@ loadVocabulary(urlgetVoc);
 
 async function loadVocabulary(url) { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
 
-    const response = await fetch(url);
-    const data = await response.text();
+    let response = await fetch(url);
+    let data = await response.text();
     console.log("data" + data);
     let text = JSON.parse(data);
     console.log("text" + text);
 
-    for (let i = 0; i < text.length; i++) { //i<db.length
-        console.log(text.length);      
-          //console.log("local: " + localStorage.key(i));
-
+    for (let i = 0; i < text.length; i++) { 
         let div = document.createElement("div");
-        //div.id = localStorage.key(i);
         div.id = text[i].id; // id an stelle i in db
         div.className = "vocab";
         mainTag.append(div);
@@ -48,21 +44,14 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
         let inputVocabulary = document.createElement("input");
         inputVocabulary.className = "vocab_input";
         inputVocabulary.type = "text";
-        //inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
-        const response = await fetch(urlselectVoc + "?itemId=" +i);
-        const data = await response.json();
-        console.log(data);
-        let text = data.text;
-        inputVocabulary.value = JSON.parse(urlselectVoc + "?itemId=i").vocabulary;
-
+        inputVocabulary.value = text[i].vocabulary;
         inputVocabulary.disabled = true;
         div.append(inputVocabulary);
 
         let inputTranslation = document.createElement("input");
         inputTranslation.className = "vocab_input";
         inputTranslation.type = "text";
-        //inputTranslation.value = JSON.parse(localStorage.getItem(localStorage.key(i))).translation;
-        inputTranslation.value = JSON.parse(urlselectVoc + "?itemId=i").translation;
+        inputTranslation.value=text[i].translation;
         inputTranslation.disabled = true;
         div.append(inputTranslation);
     }
@@ -71,10 +60,9 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
 let addVocabulary = document.getElementById('add');
 addVocabulary.addEventListener('click', addElement);
 function addElement(event) {
-    //console.log(event.target.parentNode.id);
     let div = document.createElement("div");
     //div.id = new Date().valueOf();
-    div.id; 
+    //div.id;
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -101,6 +89,7 @@ function addElement(event) {
 }
 function saveElement(event) {
     let div = event.target.parentNode;
+    //div.id wie?
 
     //buttons
     let buttonEdit = document.createElement("button");
@@ -124,15 +113,8 @@ function saveElement(event) {
     isTranslation.disabled = true;
     isTranslation.placeholder = "";
 
-    let item = {
-        "vocabulary": isVocabulary.value,
-        "translation": isTranslation.value,
-        //"id": div.id
-    };
-
-    //localStorage.setItem(div.id, JSON.stringify(item));
-    //JSON.stringify macht object zu string
-    //wie urladdVocabulary nutzen in angepasster form mit ?itemT=&itemV=
+    //vokabel zu db hinzufügen via urladdVoc mit übergebenen vokabel-und übersetzungswerten
+    fetch(urladdVoc+"itemV="+isVocabulary.value+"&itemT="+isTranslation.value);
 }
 function editElement(event) {
     let div = event.target.parentNode;
@@ -140,6 +122,7 @@ function editElement(event) {
     //buttons
     //bearbeiten entfernen
     div.removeChild(div.getElementsByTagName('button')[0]);
+    console.log(div.id);
 
     let buttonSave = document.createElement("button");
     buttonSave.textContent = "Speichern";
@@ -154,15 +137,7 @@ function editElement(event) {
     let isTranslation = div.getElementsByTagName('input')[1];
     isTranslation.disabled = false;
 
-    let item = {
-        vocabulary: isVocabulary.value,
-        translation: isTranslation.value
-        //id: (für Datenbank)
-    };
-
-    localStorage.setItem(div.id, JSON.stringify(item));
-    //JSON.stringify macht object zu string
-    //urleditVoc erweitern mit ?itemT=usw
+    fetch(urleditVoc+div.id+"&itemV="+isVocabulary.value+"&itemT="+isTranslation.value);
 }
 function deleteElement(event) {
     let div = event.target.parentNode;
@@ -176,9 +151,6 @@ function deleteElement(event) {
     div.removeChild(div.getElementsByTagName('input')[0]);
     //div
     div.parentNode.removeChild(div);
-    //local storage
-    //console.log("ID des zu löschenden Divs:", div.id);
-    //localStorage.removeItem(div.id);
-    //data löschen
-    //mit urldeleteVoc?itemId=div.id
+    //db
+    fetch(urldeleteVoc+div.id);
 }

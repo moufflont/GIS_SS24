@@ -51,7 +51,7 @@ async function insertRows(db, url, lmt) {
     })
 }
 insertRows(db, url, 2);
-
+ 
 //insert data into table
 //sql='INSERT INTO users(first_name,last_name,username,password,email) VALUES (?,?,?,?,?)'; //one ? for each Spalte
 //db.run(sql,["fred","fredson","fred_user","testtwo","fred@gmail.com"],(err)=>{
