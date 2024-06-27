@@ -2,8 +2,6 @@
 
 // für übergabe in url bspw. schreiben: ?itemId=1&itemV=cat&itemT=Katze
 
-
-
 //parameters to be added with urleditVoc+=...
 let urlgetVoc = "http://127.0.0.1:3000/getVocabulary";
 let urlselectVoc = "http://127.0.0.1:3000/selectVocabulary";
@@ -24,7 +22,8 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
     console.log("text" + text);
 
     for (let i = 0; i < text.length; i++) { //i<db.length
-        //console.log("local: " + localStorage.key(i));
+        console.log(text.length);      
+          //console.log("local: " + localStorage.key(i));
 
         let div = document.createElement("div");
         //div.id = localStorage.key(i);
