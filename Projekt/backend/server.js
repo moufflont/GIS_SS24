@@ -28,20 +28,22 @@ db.run(sqlmessage);
       break;
     case '/getVocabulary': //url-Anhang
       sqlmessage='SELECT * FROM  vocabularyCollection';
-      result=db.all(sqlmessage,(err)=>{
+      db.all(sqlmessage,(err,rows)=>{
         if(err) return console.error(err.message);
+        response.write(JSON.stringify(rows));
+        response.end();
       })
-      response.on(JSON.stringify(result));
       break;
     case '/selectVocabulary': //für einzelne
       sqlmessage='SELECT * FROM vocabularyCollection WHERE id=?';
-      result = db.all(sqlmessage,[itemId],(err,rows)=>{
+      result = db.all(sqlmessage,[url.searchParams.get('itemId')],(err,rows)=>{
             if(err) return console.error(err.message);
                 rows.forEach(row=>{
                     console.log(row);
                     response.on(JSON.stringify(row));
                 })
               })
+      response.end();
       break;
     case '/addVocabulary': 
       sqlmessage='INSERT INTO vocabularyCollection(vocabulary,translation) VALUES(?,?)';
@@ -68,7 +70,6 @@ db.run(sqlmessage);
     default:
       response.statusCode = 404;
   }
-  response.end();
 });
 
 server.listen(port, hostname, () => {

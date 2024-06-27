@@ -2,9 +2,7 @@
 
 // für übergabe in url bspw. schreiben: ?itemId=1&itemV=cat&itemT=Katze
 
-//vokabeln.html
-let mainTag = document.getElementById('vocabulary_main');
-loadVocabulary(urlgetVoc);
+
 
 //parameters to be added with urleditVoc+=...
 let urlgetVoc = "http://127.0.0.1:3000/getVocabulary";
@@ -13,21 +11,24 @@ let urladdVoc = "http://127.0.0.1:3000/addVocabulary";
 let urldeleteVoc = "http://127.0.0.1:3000/deleteVocabulary";
 let urleditVoc = "http://127.0.0.1:3000/editVocabulary";
 
-//server anfragen
+//vokabeln.html
+let mainTag = document.getElementById('vocabulary_main');
+loadVocabulary(urlgetVoc);
+
 async function loadVocabulary(url) { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
 
     const response = await fetch(url);
-    const data = await response.json();
-    let text = data.text;
-    console.log('data' + data);
-    console.log('text' + text);
+    const data = await response.text();
+    console.log("data" + data);
+    let text = JSON.parse(data);
+    console.log("text" + text);
 
-    for (let i = 0; i < text.length(); i++) { //i<db.length
+    for (let i = 0; i < text.length; i++) { //i<db.length
         //console.log("local: " + localStorage.key(i));
 
         let div = document.createElement("div");
         //div.id = localStorage.key(i);
-        div.id = text.key(i); //wie id an stelle i in db?
+        div.id = text[i].id; // id an stelle i in db
         div.className = "vocab";
         mainTag.append(div);
 
@@ -49,6 +50,10 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
         inputVocabulary.className = "vocab_input";
         inputVocabulary.type = "text";
         //inputVocabulary.value = JSON.parse(localStorage.getItem(localStorage.key(i))).vocabulary;
+        const response = await fetch(urlselectVoc + "?itemId=" +i);
+        const data = await response.json();
+        console.log(data);
+        let text = data.text;
         inputVocabulary.value = JSON.parse(urlselectVoc + "?itemId=i").vocabulary;
 
         inputVocabulary.disabled = true;
@@ -70,7 +75,7 @@ function addElement(event) {
     //console.log(event.target.parentNode.id);
     let div = document.createElement("div");
     //div.id = new Date().valueOf();
-    div.id; //braucht es diese?
+    div.id; 
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -123,7 +128,7 @@ function saveElement(event) {
     let item = {
         "vocabulary": isVocabulary.value,
         "translation": isTranslation.value,
-        "id": div.id
+        //"id": div.id
     };
 
     //localStorage.setItem(div.id, JSON.stringify(item));
