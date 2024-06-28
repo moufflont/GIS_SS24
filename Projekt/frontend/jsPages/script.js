@@ -23,7 +23,7 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
 
     for (let i = 0; i < text.length; i++) { 
         let div = document.createElement("div");
-        div.id = text[i].id; // id an stelle i in db
+        div.id = text[text.length-1-i].id; // id an stelle i in db aber rückwärts
         div.className = "vocab";
         mainTag.append(div);
 
@@ -44,14 +44,14 @@ async function loadVocabulary(url) { //await muss in funktion sein; for auch dri
         let inputVocabulary = document.createElement("input");
         inputVocabulary.className = "vocab_input";
         inputVocabulary.type = "text";
-        inputVocabulary.value = text[i].vocabulary;
+        inputVocabulary.value = text[text.length-1-i].vocabulary;
         inputVocabulary.disabled = true;
         div.append(inputVocabulary);
 
         let inputTranslation = document.createElement("input");
         inputTranslation.className = "vocab_input";
         inputTranslation.type = "text";
-        inputTranslation.value=text[i].translation;
+        inputTranslation.value=text[text.length-1-i].translation;
         inputTranslation.disabled = true;
         div.append(inputTranslation);
     }
@@ -62,7 +62,7 @@ addVocabulary.addEventListener('click', addElement);
 function addElement(event) {
     let div = document.createElement("div");
     //E-Mail-Frage
-    div.id;
+    div.id=new Date().getTime();
     div.className = "vocab";
     mainTag.insertBefore(div, mainTag.getElementsByTagName('div')[0]);
 
@@ -126,7 +126,7 @@ function editElement(event) {
     let buttonSave = document.createElement("button");
     buttonSave.textContent = "Speichern";
     buttonSave.className = "vocab_edit";
-    buttonSave.addEventListener('click', saveElement);
+    buttonSave.addEventListener('click', saveAfterEditElement);
     div.replaceChild(buttonSave, div.getElementsByTagName('button')[0]);
 
     //input fields
@@ -135,6 +135,32 @@ function editElement(event) {
 
     let isTranslation = div.getElementsByTagName('input')[1];
     isTranslation.disabled = false;
+
+}
+function saveAfterEditElement(event){
+    let div = event.target.parentNode;
+
+    //buttons
+    let buttonEdit = document.createElement("button");
+    buttonEdit.textContent = "Bearbeiten";
+    buttonEdit.className = "vocab_edit";
+    buttonEdit.addEventListener('click', editElement);
+    div.replaceChild(buttonEdit, div.getElementsByTagName('button')[0]);
+
+    let buttonDelete = document.createElement("button");
+    buttonDelete.textContent = "Löschen";
+    buttonDelete.className = "vocab_edit";
+    buttonDelete.addEventListener('click', deleteElement);
+    div.insertBefore(buttonDelete, buttonEdit);
+
+    //input fields
+    let isVocabulary = div.getElementsByTagName('input')[0];
+    isVocabulary.disabled = true;
+    isVocabulary.placeholder = "";
+
+    let isTranslation = div.getElementsByTagName('input')[1];
+    isTranslation.disabled = true;
+    isTranslation.placeholder = "";
 
     fetch(urleditVoc+div.id+"&itemV="+isVocabulary.value+"&itemT="+isTranslation.value);
 }

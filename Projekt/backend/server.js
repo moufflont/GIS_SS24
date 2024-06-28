@@ -39,8 +39,8 @@ const server = http.createServer((request, response) => { //request vom client; 
       })
       break;
     case '/addVocabulary': //brauche ich irgendwo request?
-      sqlmessage = 'INSERT INTO vocabularyCollection(vocabulary,translation) VALUES(?,?)';
-      db.run(sqlmessage, [(url.searchParams.get('itemV')), (url.searchParams.get('itemT'))], (err) => {
+      sqlmessage = 'INSERT INTO vocabularyCollection(id,vocabulary,translation) VALUES(?,?,?)';
+      db.run(sqlmessage, [(url.searchParams.get('itemId')),(url.searchParams.get('itemV')), (url.searchParams.get('itemT'))], (err) => {
         if (err) return console.error(err.message);
       })
       break;
@@ -52,11 +52,11 @@ const server = http.createServer((request, response) => { //request vom client; 
       break;
     case '/editVocabulary': //auch hier id nach ? in url übergeben
       sqlmessage = 'UPDATE vocabularyCollection SET vocabulary=? WHERE id=?';
-      db.run(sqlmessage, [JSON.parse(url.searchParams.get('itemV')), url.searchParams.get('itemId')], (err) => {
+      db.run(sqlmessage, [url.searchParams.get('itemV'), url.searchParams.get('itemId')], (err) => {
         if (err) return console.error(err.message);
       })
       sqlmessage = 'UPDATE vocabularyCollection SET translation=? WHERE id=?';
-      db.run(sqlmessage, [JSON.parse(url.searchParams.get('itemT')), url.searchParams.get('itemId')], (err) => {
+      db.run(sqlmessage, [url.searchParams.get('itemT'), url.searchParams.get('itemId')], (err) => {
         if (err) return console.error(err.message);
       })
       break;

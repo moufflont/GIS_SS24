@@ -1,15 +1,29 @@
 //lernmodus_karteikarten.html
+
+//parameters to be added with urleditVoc+=...
+let urlgetVoc = "http://127.0.0.1:3000/getVocabulary";
+
 let mainTag = document.getElementById('flash_main');
 
 let div = document.createElement("div");
 div.className = "learning_questionare";
 mainTag.append(div);
 
+loadVocabulary(urlgetVoc);
+
 let count = 0;
+async function loadVocabulary(url) { //await muss in funktion sein; for auch drin, da das erst passieren kann, wenn vokabeln geladen haben
+
+    let response = await fetch(url);
+    let data = await response.text();
+    console.log("data" + data);
+    let text = JSON.parse(data);
+    console.log("text" + text);
 
 //vokabel
 let word = document.createElement("span");
-word.textContent = JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
+word.textContent = text[count].vocabulary;
+console.log("in text: "+ text[count].vocabulary);
 div.append(word);
 
 //breaks
@@ -36,7 +50,7 @@ buttonNext.addEventListener('click', showNextElement);
 div.append(buttonNext);
 
 function showNextElement(event) {
-    if (count == localStorage.length - 1) {
+    if (count == text.length - 1) {
         let output = document.createElement("span");
         output.textContent = "Alle Vokabeln wurden durchgearbeitet! Glückwunsch!";
         mainTag.append(output);
@@ -47,7 +61,7 @@ function showNextElement(event) {
     }
     else {
         count = count + 1;
-        word.textContent = JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
+        word.textContent = text[count].vocabulary;
         div.replaceChild(word, word);
         div.replaceChild(buttonShowTranslation, div.getElementsByTagName('span')[1]);
     }
@@ -55,7 +69,7 @@ function showNextElement(event) {
 
 function showTranslation(event) {
     let wordTranslation = document.createElement("span");
-    wordTranslation.textContent = JSON.parse(localStorage.getItem(localStorage.key(count))).translation;
+    wordTranslation.textContent = text[count].translation;
     div.replaceChild(wordTranslation, div.getElementsByTagName('button')[1]);
 }
 function showPreviousElement(event) {
@@ -70,8 +84,9 @@ function showPreviousElement(event) {
     }
     else {
         count = count - 1;
-        word.textContent = JSON.parse(localStorage.getItem(localStorage.key(count))).vocabulary;
+        word.textContent = text[count].vocabulary;
         div.replaceChild(word, word);
         div.replaceChild(buttonShowTranslation, div.getElementsByTagName('span')[1]);
     }
+}
 }
